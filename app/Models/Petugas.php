@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticable;
 
-class Petugas extends Model
-{
+class Petugas extends Authenticable {
     use HasFactory;
 
     protected $table = 'tb_petugas';

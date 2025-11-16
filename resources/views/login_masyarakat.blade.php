@@ -273,7 +273,7 @@
                     <div style="font-size:13px;color:var(--muted)">Lelang yang lebih cepat dan terpercaya</div>
                 </div>
             </div>
-            <h1>Selamat datang!</h1>
+            <h1>Selamat datang Masyarakat!</h1>
             <p>Aplikasi lelang adalah program komputer berbasis internet yang memfasilitasi penjualan barang secara
                 daring, memungkinkan peserta untuk mengajukan penawaran harga secara tertulis atau lisan tanpa harus
                 hadir secara fisik. Aplikasi ini menawarkan kemudahan akses, efisiensi, transparansi, dan keamanan
@@ -282,7 +282,7 @@
         </section>
 
         <aside class="card" aria-label="Form login">
-            <h2>Masuk</h2>
+            <h2>Masuk Sebagai Masyarakat</h2>
             <p class="sub">Gunakan username dan kata sandi Anda</p>
 
             <form method="post" action="/login/proses">
@@ -308,7 +308,8 @@
                 <a href="/register" class="btn-login" style="text-align:center; display:block; margin-top:10px;">
                     Daftar
                 </a>
-                <p class="hint">Login sebagai Masyarakat <a href="{{ Route('login_masyarakat') }}" style="color:var(--primary);text-decoration:none">Login</a></p>
+                <p class="hint">Login sebagai Administrator <a href="{{ Route('login') }}"
+                        style="color:var(--primary);text-decoration:none">Login</a></p>
 
                 <div id="message" role="status" aria-live="polite"></div>
             </form>
