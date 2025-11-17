@@ -19,13 +19,11 @@ use App\Http\Controllers\BarangController;
 */
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-    }
-    return redirect()->route('login');
+    return redirect()->route('login_petugas');
 });
+
+Route::get('/logout_masyarakat', [AuthController::class, 'logoutMasyarakat'])->name('logout_masyarakat');
+Route::get('/logout_petugas', [AuthController::class, 'logoutPetugas'])->name('logout_petugas');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login_petugas');
 Route::get('login_masyarakat', [AuthController::class, 'ShowLoginMasyarakat'])->name('login_masyarakat');
@@ -43,6 +41,18 @@ Route::get('/dashboard', [DashboardController::class, 'DashboardPetugas']);
 Route::get('/petugas', [PetugasController::class, 'index']);
 Route::get('/masyarakat', [MasyarakatController::class, 'index']);
 Route::get('/barang', [BarangController::class, 'index']);
+
+Route::post('petugas/store', [PetugasController::class, 'store']);
+
+Route::delete('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.destroy');
+
+Route::post('masyarakat/store', [MasyarakatController::class, 'store']);
+Route::put('/masyarakat/update/{id}', [MasyarakatController::class, 'update'])->name('masyarakat.update');
+Route::delete('/masyarakat/delete/{id}', [MasyarakatController::class, 'destroy'])->name('masyarakat.destroy');
+
+Route::post('/barang/store', [BarangController::class, 'store']);
+
+Route::delete('/barang/delete/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
 Route::middleware('auth.petugas')->group(function () {
 

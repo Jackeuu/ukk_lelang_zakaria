@@ -18,7 +18,6 @@
             display: flex;
         }
 
-        /*  untuk bagian Sidebar */
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -46,11 +45,6 @@
             font-size: 15px;
         }
 
-        .sidebar a svg {
-            width: 20px;
-            height: 20px;
-        }
-
         .sidebar a:hover {
             background: rgba(90, 156, 255, 0.3);
         }
@@ -60,11 +54,6 @@
             color: white;
         }
 
-        .sidebar a.active svg path {
-            fill: white;
-        }
-
-        /* Main */
         .main {
             margin-left: 250px;
             width: calc(100% - 250px);
@@ -109,119 +98,73 @@
 
 <body>
 
-    <!-- Sidebar -->
-    <!-- Sidebar -->
     <div class="sidebar">
         <h2>Aplikasi Lelang</h2>
+        {{-- DEBUG --}}
 
-        {{-- =============================
-        MENU UNTUK PETUGAS / ADMIN
-        ============================== --}}
-        @if(session('level') != 'masyarakat')
 
-            <a href="/dashboard">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-                </svg>
-                Dashboard
-            </a>
+        <!-- ADMIN -->
+        @if(session('level') == 'Administrator')
+
+            <a href="/dashboard">Dashboard</a>
 
             <br>
             <small style="color:gray">DATA MASTER</small>
+            <a href="/petugas">Data Petugas</a>
+            <a href="/masyarakat">Data Masyarakat</a>
+            <a href="/barang">Data Barang</a>
 
-            <a href="/petugas">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue"
-                        d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
-                </svg>
-                Data Petugas
-            </a>
+            <br>
+            <small style="color:gray">LAPORAN</small>
+            <a href="">Laporan</a>
 
-            <a href="/masyarakat">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue"
-                        d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
-                </svg>
-                Data Masyarakat
-            </a>
+            <a href="/logout_petugas">Logout</a>
 
-            <a href="/barang">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 3v18h18V3H3zm16 16H5V5h14v14z" />
-                </svg>
-                Data Barang
-            </a>
+        @endif
+
+
+
+        <!-- PETUGAS -->
+        @if(session('level') == 'Petugas')
+
+            <a href="/dashboard">Dashboard</a>
+
+            <br>
+            <small style="color:gray">DATA MASTER</small>
+            <a href="/barang">Data Barang</a>
 
             <br>
             <small style="color:gray">TRANSAKSI</small>
+            <a href="/lelang">Lelang</a>
+            <a href="/History_lelang">History Lelang</a>
 
-            <a href="/lelang">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 21h18v-2H3v2zM14.1 3l1.4 1.4-9.2 9.2-1.4-1.4L14.1 3z" />
-                </svg>
-                Lelang
-            </a>
+            <br>
+            <small style="color:gray">LAPORAN</small>
+            <a href="">Laporan</a>
 
-            <a href="/History_lelang">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 21h18v-2H3v2zM14.1 3l1.4 1.4-9.2 9.2-1.4-1.4L14.1 3z" />
-                </svg>
-                History Lelang
-            </a>
+            <a href="/logout_petugas">Logout</a>
 
         @endif
 
 
 
-        {{-- =============================
-        MENU UNTUK MASYARAKAT
-        ============================== --}}
+        <!-- MASYARAKAT -->
         @if(session('level') == 'masyarakat')
 
-            <a href="/dashboard_masyarakat">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-                </svg>
-                Dashboard
-            </a>
+            <a href="/dashboard_masyarakat">Dashboard</a>
 
             <br>
             <small style="color:gray">LELANG</small>
+            <a href="/lelang">Lelang</a>
+            <a href="/History_lelang">History Saya</a>
 
-            <a href="/lelang">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 21h18v-2H3v2zM14.1 3l1.4 1.4-9.2 9.2-1.4-1.4L14.1 3z" />
-                </svg>
-                Lelang
-            </a>
-
-            <a href="/History_lelang">
-                <svg viewBox="0 0 24 24">
-                    <path fill="blue" d="M3 21h18v-2H3v2zM14.1 3l1.4 1.4-9.2 9.2-1.4-1.4L14.1 3z" />
-                </svg>
-                History Saya
-            </a>
+            <a href="/logout_masyarakat">Logout</a>
 
         @endif
-
-
-
-        {{-- =============================
-        LOGOUT UNTUK SEMUA LEVEL
-        ============================== --}}
-        <a href="/Logout">
-            <svg viewBox="0 0 24 24">
-                <path fill="blue"
-                    d="M12 15.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z" />
-            </svg>
-            Logout
-        </a>
 
     </div>
 
 
-
-    <!-- Main konten atau isi dalam kontennya-->
     <div class="main">
 
         <div class="top-bar">
@@ -236,13 +179,12 @@
 
     </div>
 
-    <!-- ketika button aktif -->
     <script>
         const links = document.querySelectorAll(".sidebar a");
         const current = window.location.pathname;
 
         links.forEach(a => {
-            if (a.getAttribute("href") === current) {
+            if (current.startsWith(a.getAttribute("href"))) {
                 a.classList.add("active");
             }
         });

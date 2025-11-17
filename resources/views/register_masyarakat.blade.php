@@ -16,16 +16,17 @@
 
         <form id="formAuthetication" class="mb-3" action="{{ route('daftar') }}" method="POST">
             @csrf
-            <div>
-                <label>NIK</label>
-                <input type="text" name="NIK" placeholder="Masukkan NIK anda" required>
-            </div>
-
+            
             <div>
                 <label>Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" placeholder="Masukkan nama lengkap anda" required>
             </div>
 
+            <div>
+                <label>Alamat</label>
+                <input type="text" name="alamat" placeholder="Masukkan alamat anda" required>
+            </div>
+            
             <div>
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Buat username anda" required>
@@ -39,6 +40,11 @@
             <div>
                 <label>No Telepon</label>
                 <input type="text" name="telp" placeholder="Masukkan nomor telepon anda" required>
+            </div>
+
+            <div>
+                <label>Status</label>
+                <input type="text" name="status" placeholder="Masukkan status anda" required>
             </div>
 
             <button class="btn">Daftar</button>

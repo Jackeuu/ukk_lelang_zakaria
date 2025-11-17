@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tgl');
             $table->integer('harga_awal');
             $table->string('deskripsi_barang');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

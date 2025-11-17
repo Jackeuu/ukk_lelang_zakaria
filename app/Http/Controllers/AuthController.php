@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class AuthController extends Controller
     {
         return view('login_masyarakat');
     }
-
+    // LOGIN PETUGAS (ADMIN / PETUGAS)
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -29,15 +28,33 @@ class AuthController extends Controller
         ]);
 
         if (Auth::guard('petugas')->attempt($credentials)) {
-
             $request->session()->regenerate();
 
             $petugas = Auth::guard('petugas')->user();
 
-            // Simpan ROLE ke session
+            // AMBIL LEVEL DENGAN AMAN atau HAK AKSES
+
+            $level = null;
+
+            // jika relasi level ada
+            if ($petugas->level) {
+                // sesuaikan nama kolomnya (level atau nama_level)
+                $level = $petugas->level->level ?? $petugas->level->nama_level ?? null;
+            }
+
+            // fallback jika level null
+            if (!$level) {
+                if ($petugas->id_level == 1)
+                    $level = 'admin';
+                elseif ($petugas->id_level == 2)
+                    $level = 'petugas';
+                else
+                    $level = 'petugas';
+            }
+
             session([
-                'level' => $petugas->level->level,  // admin atau petugas
-                'id_petugas' => $petugas->id_petugas
+                'level' => $level,
+                'id_petugas' => $petugas->id_petugas,
             ]);
 
             return redirect('/dashboard');
@@ -45,46 +62,41 @@ class AuthController extends Controller
 
         return back()->with('error', 'Username atau Password salah');
     }
+
+    // LOGIN SEBAGAI MASYARAKAT
     public function LoginMasyarakat(Request $req)
-{
-    $req->validate([
-        'username' => 'required',
-        'password' => 'required'
-    ]);
+    {
+        $req->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-    // Cari user masyarakat berdasarkan username
-    $user = Masyarakat::where('username', $req->username)->first();
+        $user = Masyarakat::where('username', $req->username)->first();
 
-    if (!$user) {
-        return back()->with('error', 'Username tidak ditemukan');
+        if (!$user) {
+            return back()->with('error', 'Username tidak ditemukan');
+        }
+
+        if (!Hash::check($req->password, $user->password)) {
+            return back()->with('error', 'Password salah');
+        }
+
+        $req->session()->put([
+            'level' => 'masyarakat',
+            'id_user' => $user->id_user,
+            'nama_lengkap' => $user->nama_lengkap,
+        ]);
+
+        return redirect()->route('dashboard_masyarakat');
     }
 
-    // Cek password
-    if (!Hash::check($req->password, $user->password)) {
-        return back()->with('error', 'Password salah');
-    }
+    // REGISTER PETUGAS
 
-    // Simpan session manual
-    session([
-        'level' => 'masyarakat',
-        'id_user' => $user->id_user,    // pastikan kolomnya benar
-        'nama_lengkap' => $user->nama_lengkap,
-    ]);
-
-    return redirect()->route('dashboard_masyarakat');
-}
-
-
-
-    public function ShowRegisterForm()
+    public function showRegisterForm()
     {
         return view('register');
     }
 
-    public function ShowRegisterMasyarakat()
-    {
-        return view('register_masyarakat');
-    }
     public function register(Request $request)
     {
         $request->validate([
@@ -94,7 +106,7 @@ class AuthController extends Controller
             'id_level' => 'required',
         ]);
 
-        $user = Petugas::create([
+        Petugas::create([
             'nama_petugas' => $request->nama_petugas,
             'username' => $request->username,
             'password' => Hash::make($request->password),
@@ -104,23 +116,52 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
+    // REGISTER MASYARAKAT
+
+    public function showRegisterMasyarakat()
+    {
+        return view('register_masyarakat');
+    }
     public function RegisterMasyarakat(Request $request)
     {
         $request->validate([
-            'NIK' => 'required',
             'nama_lengkap' => 'required',
+            'alamat' => 'required',
             'username' => 'required',
             'password' => 'required',
             'telp' => 'required',
+            'status' => 'required',
+            
         ]);
 
-        $user = Masyarakat::create([
-            'NIK' => $request->NIK,
+        Masyarakat::create([
             'nama_lengkap' => $request->nama_lengkap,
+            'alamat' => $request->alamat,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'telp' => $request->telp,
+            'status' => $request->status,
         ]);
+
+        return redirect('/login_masyarakat');
+    }
+
+
+    // LOGOUT PETUGAS
+    public function logoutPetugas(Request $request)
+    {
+        Auth::guard('petugas')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
+    // LOGOUT MASYARAKAT
+    public function logoutMasyarakat(Request $request)
+    {
+        $request->session()->flush();
+        $request->session()->regenerate();
 
         return redirect('/login_masyarakat');
     }

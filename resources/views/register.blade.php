@@ -37,7 +37,7 @@
         <button class="btn">Daftar</button>
 
         <div class="links">
-          Sudah punya akun? <a href={{ Route('login') }}>Masuk</a>
+          Sudah punya akun? <a href={{ Route('login_petugas') }}>Masuk</a>
         </div>
       </form>
     </aside>
