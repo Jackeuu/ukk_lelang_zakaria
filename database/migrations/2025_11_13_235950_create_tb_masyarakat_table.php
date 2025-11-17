@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tb_masyarakat', function (Blueprint $table) {
             $table->id('id_user');
+            $table->string('NIK');
             $table->string('nama_lengkap');
             $table->string('username');
             $table->string('password');

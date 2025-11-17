@@ -305,9 +305,6 @@
 
                 <button type="submit" class="btn">Masuk</button>
 
-                <a href="/register" class="btn-login" style="text-align:center; display:block; margin-top:10px;">
-                    Daftar
-                </a>
                 <p class="hint">Login sebagai Masyarakat <a href="{{ Route('login_masyarakat') }}" style="color:var(--primary);text-decoration:none">Login</a></p>
 
                 <div id="message" role="status" aria-live="polite"></div>

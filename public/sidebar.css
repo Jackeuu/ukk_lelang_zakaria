@@ -1,0 +1,57 @@
+.sidebar {
+    width: 230px;
+    background: #ffffff;
+    height: 100vh;
+    padding: 20px 0;
+    border-right: 1px solid #e5e5e5;
+    position: fixed;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-bottom: 8px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #1e3a8a; /* biru tua */
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.menu svg {
+    width: 20px;
+    height: 20px;
+    fill: #1e3a8a; /* warna icon default */
+    transition: 0.2s ease;
+}
+
+/* Hover effect */
+.menu a:hover {
+    background: #1e3a8a;
+    color: #ffffff;
+}
+
+.menu a:hover svg {
+    fill: #ffffff;
+}
+
+/* Active (halaman sedang dibuka) */
+.menu li.active a {
+    background: #1e3a8a;
+    color: #ffffff;
+}
+
+.menu li.active svg {
+    fill: #ffffff;
+}

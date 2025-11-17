@@ -305,7 +305,7 @@
 
                 <button type="submit" class="btn">Masuk</button>
 
-                <a href="/register" class="btn-login" style="text-align:center; display:block; margin-top:10px;">
+                <a href="/register_masyarakat" class="btn-login" style="text-align:center; display:block; margin-top:10px;">
                     Daftar
                 </a>
                 <p class="hint">Login sebagai Administrator <a href="{{ Route('login') }}"
