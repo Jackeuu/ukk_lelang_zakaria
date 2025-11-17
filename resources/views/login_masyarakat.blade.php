@@ -285,8 +285,9 @@
             <h2>Masuk Sebagai Masyarakat</h2>
             <p class="sub">Gunakan username dan kata sandi Anda</p>
 
-            <form method="post" action="/login/proses">
+            <form method="post" action="{{ route('login.masyarakat.proses') }}">
                 @csrf
+
                 <div>
                     <label for="text">Username</label>
                     <input type="text" name="username" placeholder="Masukkan username" required>
@@ -305,10 +306,11 @@
 
                 <button type="submit" class="btn">Masuk</button>
 
-                <a href="/register_masyarakat" class="btn-login" style="text-align:center; display:block; margin-top:10px;">
+                <a href="/register_masyarakat" class="btn-login"
+                    style="text-align:center; display:block; margin-top:10px;">
                     Daftar
                 </a>
-                <p class="hint">Login sebagai Administrator <a href="{{ Route('login') }}"
+                <p class="hint">Login sebagai Administrator <a href="{{ Route('login_petugas') }}"
                         style="color:var(--primary);text-decoration:none">Login</a></p>
 
                 <div id="message" role="status" aria-live="polite"></div>

@@ -19,7 +19,7 @@ use App\Http\Controllers\BarangController;
 */
 
 Route::get('/', function () {
-    if(Auth::check()){
+    if (Auth::check()) {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
@@ -27,10 +27,12 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login_petugas');
 Route::get('login_masyarakat', [AuthController::class, 'ShowLoginMasyarakat'])->name('login_masyarakat');
+
 Route::post('/login/proses', [AuthController::class, 'login']);
-Route::post('/login/proses', [AuthController::class, 'LoginMasyarakat']);
+Route::post('/login_masyarakat/proses', [AuthController::class, 'LoginMasyarakat'])->name('login.masyarakat.proses');
+
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::get('register_masyarakat', [AuthController::class, 'ShowRegisterMasyarakat'])->name('register_masyarakat');
@@ -42,6 +44,11 @@ Route::get('/petugas', [PetugasController::class, 'index']);
 Route::get('/masyarakat', [MasyarakatController::class, 'index']);
 Route::get('/barang', [BarangController::class, 'index']);
 
-Route::middleware('auth.petugas')->group(function (){
+Route::middleware('auth.petugas')->group(function () {
 
 });
+
+Route::get('/dashboard_masyarakat', function () {
+    return view('dashboard_masyarakat');
+})->name('dashboard_masyarakat')->middleware('auth.masyarakat');
+

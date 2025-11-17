@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'petugas',
-        'passwords' => 'petugas',
+        'guard' => 'web',
+        'passwords' => 'users',
     ],
 
     /*

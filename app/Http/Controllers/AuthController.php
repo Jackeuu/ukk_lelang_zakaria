@@ -29,27 +29,52 @@ class AuthController extends Controller
         ]);
 
         if (Auth::guard('petugas')->attempt($credentials)) {
+
             $request->session()->regenerate();
-            return redirect('dashboard');
+
+            $petugas = Auth::guard('petugas')->user();
+
+            // Simpan ROLE ke session
+            session([
+                'level' => $petugas->level->level,  // admin atau petugas
+                'id_petugas' => $petugas->id_petugas
+            ]);
+
+            return redirect('/dashboard');
         }
 
         return back()->with('error', 'Username atau Password salah');
     }
+    public function LoginMasyarakat(Request $req)
+{
+    $req->validate([
+        'username' => 'required',
+        'password' => 'required'
+    ]);
 
-    public function LoginMasyarakat(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required'],
-        ]);
+    // Cari user masyarakat berdasarkan username
+    $user = Masyarakat::where('username', $req->username)->first();
 
-        if (Auth::guard('masyarakat')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('dashboard');
-        }
-
-        return back()->with('error', 'username atau password salah');
+    if (!$user) {
+        return back()->with('error', 'Username tidak ditemukan');
     }
+
+    // Cek password
+    if (!Hash::check($req->password, $user->password)) {
+        return back()->with('error', 'Password salah');
+    }
+
+    // Simpan session manual
+    session([
+        'level' => 'masyarakat',
+        'id_user' => $user->id_user,    // pastikan kolomnya benar
+        'nama_lengkap' => $user->nama_lengkap,
+    ]);
+
+    return redirect()->route('dashboard_masyarakat');
+}
+
+
 
     public function ShowRegisterForm()
     {
