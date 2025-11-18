@@ -32,17 +32,12 @@ class AuthController extends Controller
 
             $petugas = Auth::guard('petugas')->user();
 
-            // AMBIL LEVEL DENGAN AMAN atau HAK AKSES
-
             $level = null;
 
-            // jika relasi level ada
             if ($petugas->level) {
-                // sesuaikan nama kolomnya (level atau nama_level)
                 $level = $petugas->level->level ?? $petugas->level->nama_level ?? null;
             }
 
-            // fallback jika level null
             if (!$level) {
                 if ($petugas->id_level == 1)
                     $level = 'admin';
@@ -71,23 +66,23 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $user = Masyarakat::where('username', $req->username)->first();
+        $credentials = $req->only('username', 'password');
 
-        if (!$user) {
-            return back()->with('error', 'Username tidak ditemukan');
+        if (Auth::guard('masyarakat')->attempt($credentials)) {
+            $req->session()->regenerate();
+
+            $user = Auth::guard('masyarakat')->user();
+
+            session([
+                'level' => 'masyarakat',
+                'id_user' => $user->id_user,
+                'nama_lengkap' => $user->nama_lengkap,
+            ]);
+
+            return redirect()->route('dashboard_masyarakat');
         }
 
-        if (!Hash::check($req->password, $user->password)) {
-            return back()->with('error', 'Password salah');
-        }
-
-        $req->session()->put([
-            'level' => 'masyarakat',
-            'id_user' => $user->id_user,
-            'nama_lengkap' => $user->nama_lengkap,
-        ]);
-
-        return redirect()->route('dashboard_masyarakat');
+        return back()->with('error', 'Username atau Password salah!');
     }
 
     // REGISTER PETUGAS
@@ -131,7 +126,7 @@ class AuthController extends Controller
             'password' => 'required',
             'telp' => 'required',
             'status' => 'required',
-            
+
         ]);
 
         Masyarakat::create([

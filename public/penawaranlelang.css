@@ -1,3 +1,78 @@
+/* Overlay */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* BOX 2 KOLOM */
+.modal-box-2col {
+    width: 780px;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 25px;
+    position: relative;
+}
+
+/* Tutup modal */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Kolom kiri */
+.modal-left {
+    width: 45%;
+}
+
+.modal-img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Kolom kanan */
+.modal-right {
+    width: 55%;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin: 8px 0 15px 0;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    background: #3465ff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: #1f4ddc;
+}
+
 .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

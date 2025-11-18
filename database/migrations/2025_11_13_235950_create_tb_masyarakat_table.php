@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('telp');
-            $table->string('status');
+            $table->string('status')->default('aktif');
             $table->timestamps();
         });
     }

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Layout - Aplikasi Lelang</title>
+    <title>Aplikasi Lelang</title>
+
     <style>
         * {
             margin: 0;
@@ -116,7 +117,7 @@
 
             <br>
             <small style="color:gray">LAPORAN</small>
-            <a href="">Laporan</a>
+            <a href="/laporan">Laporan</a>
 
             <a href="/logout_petugas">Logout</a>
 
@@ -134,19 +135,17 @@
             <a href="/barang">Data Barang</a>
 
             <br>
-            <small style="color:gray">TRANSAKSI</small>
-            <a href="/lelang">Lelang</a>
-            <a href="/History_lelang">History Lelang</a>
+            <small style="color:gray">LELANG</small>
+            <a href="/lelang">Lelang Barang</a>
+            <a href="/History_lelang">Riwayat Lelang</a>
 
             <br>
             <small style="color:gray">LAPORAN</small>
-            <a href="">Laporan</a>
+            <a href="/laporan">Laporan</a>
 
             <a href="/logout_petugas">Logout</a>
 
         @endif
-
-
 
         <!-- MASYARAKAT -->
         @if(session('level') == 'masyarakat')
@@ -155,7 +154,7 @@
 
             <br>
             <small style="color:gray">LELANG</small>
-            <a href="/lelang">Lelang</a>
+            <a href="{{ route('lelangMasyarakat') }}">Lelang</a>
             <a href="/History_lelang">History Saya</a>
 
             <a href="/logout_masyarakat">Logout</a>

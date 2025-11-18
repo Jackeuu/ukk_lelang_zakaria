@@ -16,8 +16,8 @@ class AuthMasyarakat
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!session()->has('id_masyarakat')) {
-            return redirect('/login_masyarakat')->with('error', 'Silakan login dulu!');
+        if (session('level') !== 'masyarakat') {
+            return redirect('/login_masyarakat');
         }
         return $next($request);
     }

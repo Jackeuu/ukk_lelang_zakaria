@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LelangController;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\PetugasController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ Route::get('login_masyarakat', [AuthController::class, 'ShowLoginMasyarakat'])->
 
 Route::post('/login/proses', [AuthController::class, 'login']);
 Route::post('/login_masyarakat/proses', [AuthController::class, 'LoginMasyarakat'])->name('login.masyarakat.proses');
-
+Route::post('/login_masyarakat', [AuthController::class, 'LoginMasyarakat']);
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::get('register_masyarakat', [AuthController::class, 'ShowRegisterMasyarakat'])->name('register_masyarakat');
@@ -43,7 +44,7 @@ Route::get('/masyarakat', [MasyarakatController::class, 'index']);
 Route::get('/barang', [BarangController::class, 'index']);
 
 Route::post('petugas/store', [PetugasController::class, 'store']);
-
+Route::put('/petugas/update/{id}', [PetugasController::class, 'update'])->name('petugas.update');
 Route::delete('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.destroy');
 
 Route::post('masyarakat/store', [MasyarakatController::class, 'store']);
@@ -51,7 +52,7 @@ Route::put('/masyarakat/update/{id}', [MasyarakatController::class, 'update'])->
 Route::delete('/masyarakat/delete/{id}', [MasyarakatController::class, 'destroy'])->name('masyarakat.destroy');
 
 Route::post('/barang/store', [BarangController::class, 'store']);
-
+Route::put('/barang/update/{id}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/delete/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
 Route::middleware('auth.petugas')->group(function () {
@@ -60,5 +61,21 @@ Route::middleware('auth.petugas')->group(function () {
 
 Route::get('/dashboard_masyarakat', function () {
     return view('dashboard_masyarakat');
-})->name('dashboard_masyarakat')->middleware('auth.masyarakat');
+})->name('dashboard_masyarakat')->middleware('auth:masyarakat');
 
+Route::get('/lelang', [LelangController::class, 'index']);
+
+Route::get('/lelang/tambah_lelang', [LelangController::class, 'create'])
+    ->name('tambahlelang');
+
+Route::post('/lelang/store', [LelangController::class, 'store'])
+    ->name('lelang.store');
+
+Route::get('/lelang_masyarakat', [LelangController::class, 'indexLelangMasyarakat'])
+    ->name('lelangMasyarakat');
+
+Route::get('/lelang_masyarakat/detail/{id}', [LelangController::class, 'detail']);
+
+Route::middleware('auth.masyarakat')->group(function () {
+    Route::post('/tawar/{id}', [LelangController::class, 'tawar'])->name('tawar');
+});
